@@ -1,12 +1,12 @@
 # Merit Order Curve
 
-Ce projet implémente une classe Python appelée `MeritOrderCurve` qui permet de générer une merit order curve afin d'obenir le clearing price. 
+Ce projet implémente une classe Python appelée `MeritOrderCurve` qui permet de générer une merit order curve afin d'obtenir le clearing price. 
 
 ## Installation
 
 Clonez le dépôt sur votre machine locale,
 ```bash
-git clone https://github.com/votre-utilisateur/merit-order-curve.git
+git clone https://github.com/SarcasticMatrix/merit-order-curve.git
 cd merit-order-curve
 ```
 Puis, installez les libraries,
@@ -23,10 +23,11 @@ from merit_order_curve import *
 
 2. Créez des tableaux NumPy représentant les **productions**, les **coûts marginaux de production**, les **demandes** et les **coûts marginaux** de demande. Attention, il faut que tout soit dans la même unité. 
 ```python
-prod = np.array([100, 150, 80, 120, 200, 50])
-prod_MC = np.array([20, 15, 25, 18, 22, 0])
-demand = np.array([100, 150, 80, 120, 50])
-demand_MC = np.array([20, 15, 25, 22, 0])
+prod = np.array([100, 150, 80, 120, 200, 50])   # production
+prod_MC = np.array([20, 15, 25, 18, 22, 0])     # marginal costs
+
+demand = np.array([100, 150, 80, 120, 50])      # demand
+demand_MC = np.array([20, 15, 25, 22, 0])       # marginal costs
 ```
 
 3. Instanciez la classe `MeritOrderCurve` avec vos données.
