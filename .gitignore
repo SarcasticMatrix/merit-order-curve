@@ -1,2 +1,6 @@
+# Folder 
 .venv/
-ipynb
+.__pycache__/
+
+# type of file
+.ipynb
