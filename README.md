@@ -15,7 +15,7 @@ pip install -r requirements.txt
 ```
 # Utilisation
 
-1. Importez la classe MeritOrderCurve dans votre script Python.
+1. Importez la classe `MeritOrderCurve` dans votre script Python.
 
 ```python
 from merit_order_curve import *
@@ -29,7 +29,7 @@ demand = np.array([100, 150, 80, 120, 50])
 demand_MC = np.array([20, 15, 25, 22, 0])
 ```
 
-3. Instanciez la classe MeritOrderCurve avec vos données.
+3. Instanciez la classe `MeritOrderCurve` avec vos données.
 ```python
 myObject = MeritOrderCurve(prod, prod_MC, demand, demand_MC)
 ```
@@ -39,7 +39,7 @@ myObject = MeritOrderCurve(prod, prod_MC, demand, demand_MC)
 myObject.merit_order_curve()
 ```
 
-5. Vous pouvez également générer la courbe avec une *demande constante* en utilisant le paramètre boolean_cst_demand.
+5. Vous pouvez également générer la courbe avec une *demande constante* en utilisant le boolean `boolean_cst_demand`.
 4. Générez et affichez la merit order curve.
 ```python
 myObject_constant_demand = MeritOrderCurve(prod, prod_MC, np.array([100]), boolean_cst_demand=True)
