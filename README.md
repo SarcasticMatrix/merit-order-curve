@@ -2,6 +2,8 @@
 
 Ce projet implémente une classe Python appelée `MeritOrderCurve` qui permet de générer une merit order curve afin d'obtenir le clearing price. 
 
+![Alt text](image.png)
+
 ## Installation
 
 Clonez le dépôt sur votre machine locale,
