@@ -21,13 +21,13 @@ pip install -r requirements.txt
 from merit_order_curve import *
 ```
 
-2. Créez des tableaux NumPy représentant les **productions**, les **coûts marginaux de production**, les **demandes** et les **coûts marginaux** de demande. Attention, il faut que tout soit dans la même unité. 
+2. Créez des arrays NumPy représentant les **productions**, les **coûts marginaux de production**, les **demandes** et les **coûts marginaux** de demande. Attention, il faut que tout soit dans la même unité. 
 ```python
 prod = np.array([100, 150, 80, 120, 200, 50])   # production
-prod_MC = np.array([20, 15, 25, 18, 22, 0])     # marginal costs
+prod_MC = np.array([20, 15, 25, 18, 22, 0])     # production marginal costs
 
 demand = np.array([100, 150, 80, 120, 50])      # demand
-demand_MC = np.array([20, 15, 25, 22, 0])       # marginal costs
+demand_MC = np.array([20, 15, 25, 22, 0])       # demand marginal costs
 ```
 
 3. Instanciez la classe `MeritOrderCurve` avec vos données.
