@@ -5,3 +5,4 @@
 # type of file
 .ipynb
 *.ipynb
+__pycache__/merit_order_curve.cpython-310.pyc

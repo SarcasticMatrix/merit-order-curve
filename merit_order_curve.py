@@ -21,9 +21,9 @@ class MeritOrderCurve:
         try:
             if self.demands_marginal_costs == None or len(demands.tolist()) == 1:
                 self.boolean_cst_demand = True
+                print('Attention, \n -> Tu as peut-être oublié de spécifier des Marginal Costs pour la demande \n -> Ou, tu as oublié de spécifier boolean_cst_demand = True, i.e. que la demande est constante')
         except:
-            print('Attention, \n -> Tu as peut-être oublié de spécifier des Marginal Costs pour la demande \n -> Ou, \
-                  tu as oublié de spécifier boolean_cst_demand = True, i.e. que la demande est constante')
+            None
 
     def prepare_curves_production(self):
 
@@ -32,6 +32,10 @@ class MeritOrderCurve:
         sorted_costs = self.prod_marginal_costs[sorted_indices]
 
         sorted_productions = np.cumsum(sorted_productions)
+        print(
+            f"Production ... \n Costs: {sorted_costs} \n Production: {sorted_productions} \n "
+        )
+
         sorted_productions = np.insert(sorted_productions, 0, 0)
 
         sorted_costs = np.insert(sorted_costs, 0, sorted_costs[0])
@@ -39,22 +43,24 @@ class MeritOrderCurve:
 
     def prepare_curves_demand(self):
 
-        sorted_indices = np.argsort(self.demands_marginal_costs)[::-1]
-        sorted_productions = self.demands[sorted_indices]
-        sorted_costs = self.demands_marginal_costs[sorted_indices]
+        sorted_indices = np.argsort(self.demands_marginal_costs)[::-1].copy()
+        sorted_productions = self.demands[sorted_indices].copy()
+        sorted_costs = self.demands_marginal_costs[sorted_indices].copy()
 
         sorted_productions = np.cumsum(sorted_productions)
-        sorted_productions = np.insert(sorted_productions, 0, 0)
 
-        sorted_costs = np.insert(sorted_costs, 0, sorted_costs[0])
+        print(
+            f"Demand ... \n Costs: {sorted_costs} \n Demand: {sorted_productions} \n "
+        )
+
+        sorted_productions = np.concatenate((sorted_productions,np.array([sorted_productions[-1]])))
+        sorted_costs = np.concatenate((sorted_costs,np.array([0])))
+
         return sorted_productions, sorted_costs
 
     def merit_order_curve(self):
 
         sorted_productions, sorted_productions_costs = self.prepare_curves_production()
-        print(
-            f"Production ... \n Costs: {sorted_productions_costs} \n Production: {sorted_productions} \n "
-        )
 
         plt.figure()
         plt.step(
@@ -66,11 +72,6 @@ class MeritOrderCurve:
 
         if not self.boolean_cst_demand:
             sorted_demands, sorted_demands_costs = self.prepare_curves_demand()
-            print(
-                f"Demand ... \n Costs: {sorted_demands_costs[::-1]} \n Demand: {sorted_demands[::-1]} \n "
-            )
-            sorted_demands = sorted_demands[::-1].copy()
-            sorted_demands_costs = sorted_demands_costs[::-1].copy()
 
             plt.step(
                 sorted_demands, sorted_demands_costs, label="Demand Curve", where="pre"
@@ -79,7 +80,7 @@ class MeritOrderCurve:
             plt.axvline(
                 x=self.demands[0], color="r", linestyle="--", label="Demand Curve"
             )
-
+        plt.grid(color='gray', linestyle='--', linewidth=0.5)
         plt.xlabel("Aggregated Production")
         plt.ylabel("Marginal Cost")
         plt.title("Merit Order Curve")
