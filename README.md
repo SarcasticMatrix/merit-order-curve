@@ -47,8 +47,5 @@ myObject_constant_demand = MeritOrderCurve(prod, prod_MC, np.array([100]), boole
 myObject_constant_demand.merit_order_curve()
 ```
 
-# Exemples
-Consultez les exemples dans le fichier `example.ipynb` pour voir comment utiliser la classe avec des données spécifiques.
-
 # Auteur
 Théophile SCHMUTZ
