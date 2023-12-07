@@ -21,7 +21,7 @@ pip install -r requirements.txt
 from merit_order_curve import *
 ```
 
-2. Créez des tableaux NumPy représentant les *productions*, les *coûts marginaux de production*, les *demandes* et les *coûts marginaux* de demande. Attention, il faut que tout soit dans la même unité. 
+2. Créez des tableaux NumPy représentant les **productions**, les **coûts marginaux de production**, les **demandes** et les **coûts marginaux** de demande. Attention, il faut que tout soit dans la même unité. 
 ```python
 prod = np.array([100, 150, 80, 120, 200, 50])
 prod_MC = np.array([20, 15, 25, 18, 22, 0])
@@ -39,7 +39,7 @@ myObject = MeritOrderCurve(prod, prod_MC, demand, demand_MC)
 myObject.merit_order_curve()
 ```
 
-5. Vous pouvez également générer la courbe avec une *demande constante* en utilisant le boolean `boolean_cst_demand`.
+5. Vous pouvez également générer la courbe avec une **demande constante** en utilisant le boolean `boolean_cst_demand`.
 4. Générez et affichez la merit order curve.
 ```python
 myObject_constant_demand = MeritOrderCurve(prod, prod_MC, np.array([100]), boolean_cst_demand=True)
