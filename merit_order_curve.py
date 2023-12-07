@@ -17,6 +17,12 @@ class MeritOrderCurve:
         self.demands_marginal_costs = demands_marginal_costs
         self.boolean_cst_demand = boolean_cst_demand
 
+        try: 
+            if self.demands_marginal_costs == None or len(demands.tolist()) == 1:
+                self.boolean_cst_demand = True
+        except:
+            None
+
     def prepare_curves_production(self):
 
         sorted_indices = np.argsort(self.prod_marginal_costs)
