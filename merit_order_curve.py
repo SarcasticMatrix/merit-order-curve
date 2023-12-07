@@ -22,7 +22,8 @@ class MeritOrderCurve:
             if self.demands_marginal_costs == None or len(demands.tolist()) == 1:
                 self.boolean_cst_demand = True
         except:
-            None
+            print('Attention, \n -> Tu as peut-être oublié de spécifier des Marginal Costs pour la demande \n -> Ou, \
+                  tu as oublier de spécifier boolean_cst_demand = True, i.e. que la demande est constante')
 
     def prepare_curves_production(self):
 
