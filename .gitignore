@@ -1,6 +1,7 @@
 # Folder 
 .venv/
 .__pycache__/
+.Exercises/
 
 # type of file
 .ipynb
