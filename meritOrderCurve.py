@@ -1,14 +1,16 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MultipleLocator
 from typing import Optional
 
 
 class MeritOrderCurve:
+
     def __init__(
         self,
-        productions,
-        prod_marginal_costs,
-        demands,
+        productions: np.array,
+        prod_marginal_costs: np.array,
+        demands: np.array,
         demands_marginal_costs: Optional[np.array] = None,
         boolean_cst_demand: Optional[bool] = False,
     ):
@@ -18,10 +20,12 @@ class MeritOrderCurve:
         self.demands_marginal_costs = demands_marginal_costs
         self.boolean_cst_demand = boolean_cst_demand
 
+        self.minimum_bids = min(0,np.min(self.prod_marginal_costs))
+
         try:
-            if self.demands_marginal_costs == None or len(demands.tolist()) == 1:
+            if self.demands_marginal_costs == None and self.boolean_cst_demand == False:
                 self.boolean_cst_demand = True
-                print('Attention, \n -> Tu as peut-être oublié de spécifier des Marginal Costs pour la demande \n -> Ou, tu as oublié de spécifier boolean_cst_demand = True, i.e. que la demande est constante')
+                print("[Attention] Les coûts marginaux pour la demande n'ont pas été spécifiés, et il n'a pas été indiqué que la demande est constante.")
         except:
             None
 
@@ -33,7 +37,7 @@ class MeritOrderCurve:
 
         sorted_productions = np.cumsum(sorted_productions)
         print(
-            f"Production ... \n Costs: {sorted_costs} \n Production: {sorted_productions} \n "
+            f"Production ... \n Costs:      {sorted_costs} \n Production: {sorted_productions} \n "
         )
 
         sorted_productions = np.insert(sorted_productions, 0, 0)
@@ -50,11 +54,11 @@ class MeritOrderCurve:
         sorted_productions = np.cumsum(sorted_productions)
 
         print(
-            f"Demand ... \n Costs: {sorted_costs} \n Demand: {sorted_productions} \n "
+            f"Demand ... \n Costs:  {sorted_costs} \n Demand: {sorted_productions} \n "
         )
 
         sorted_productions = np.concatenate((sorted_productions,np.array([sorted_productions[-1]])))
-        sorted_costs = np.concatenate((sorted_costs,np.array([0])))
+        sorted_costs = np.concatenate((sorted_costs,np.array([self.minimum_bids])))
 
         return sorted_productions, sorted_costs
 
@@ -80,9 +84,47 @@ class MeritOrderCurve:
             plt.axvline(
                 x=self.demands[0], color="r", linestyle="--", label="Demand Curve"
             )
-        plt.grid(color='gray', linestyle='--', linewidth=0.5)
         plt.xlabel("Aggregated Production")
         plt.ylabel("Marginal Cost")
+
+        plt.xticks(np.arange(0, max(sorted_productions), 100))
+        minor_locator = MultipleLocator(10)
+        plt.gca().xaxis.set_minor_locator(minor_locator)
+        plt.grid(True, which='major', linestyle='--', linewidth=0.7, color='gray')
+        plt.grid(True, which='minor', linestyle='--', linewidth=0.3, color='lightgray')
+
         plt.title("Merit Order Curve")
         plt.legend()
         plt.show()
+        
+##############################################################################################
+## EXAMPLE 1 #################################################################################
+##############################################################################################
+
+## Production
+prod = np.array([100,100,200,50,100,50])
+prod_bids = np.array([-25,-30,10,80,40,70])
+
+# Demand
+demands = np.array([250,50,70])
+demands_bids = np.array([200,60,300])
+
+# Plot
+curve = MeritOrderCurve(prod,prod_bids,demands,demands_bids)
+curve.merit_order_curve()
+
+
+##############################################################################################
+## EXAMPLE 2 - with a constant demand ########################################################
+##############################################################################################
+
+## Production
+prod = np.array([100,100,200,50,100,50])
+prod_bids = np.array([-25,-30,10,80,40,70])
+
+# Demand
+demands = np.array([50])
+
+# Plot
+curve = MeritOrderCurve(prod,prod_bids,demands,boolean_cst_demand=True)
+curve.merit_order_curve()
