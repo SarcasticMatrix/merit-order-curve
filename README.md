@@ -17,37 +17,39 @@ pip install -r requirements.txt
 ```
 # Utilisation
 
-1. Importez la classe `MeritOrderCurve` dans votre script Python.
+Créez des `np.array` représentant les **productions**, les **coûts marginaux de production**, les **demandes** et les **coûts marginaux** de demande. Attention, il faut que tout soit dans la même unité. 
 
+Soit vous importer le fichier python `meritOrderCurve`,
 ```python
-from merit_order_curve import *
+from meritOrderCurve import MeritOrderCurve
+import numpy as np
+```
+Ou alors, vous pouvez directement écire dans le fichier en lui même (comme pour les 2 exemples)
+
+
+Exemple d'utilisation dans un cas classique,  
+```python
+prod = np.array([100, 100, 200, 50, 100, 50])       # production
+prod_bids = np.array([-25, -30, 10, 80, 40, 70])    # production bids
+
+demands = np.array([250, 50, 70])                   # demand
+demands_bids = np.array([200, 60, 300])             # demand bids
+
+curve = MeritOrderCurve(prod, prod_bids, demands, demands_bids)
+curve.merit_order_curve()                           # plot the merit order curve
 ```
 
-2. Créez des `np.array` représentant les **productions**, les **coûts marginaux de production**, les **demandes** et les **coûts marginaux** de demande. Attention, il faut que tout soit dans la même unité. 
+Exemple avec une demande constante, il faut juste préciser `boolean_cst_demand=True`,
 ```python
-prod = np.array([100, 150, 80, 120, 200, 50])   # production
-prod_MC = np.array([20, 15, 25, 18, 22, 0])     # production marginal costs
 
-demand = np.array([100, 150, 80, 120, 50])      # demand
-demand_MC = np.array([20, 15, 25, 22, 0])       # demand marginal costs
-```
+prod = np.array([100, 100, 200, 50, 100, 50])
+prod_bids = np.array([-25, -30, 10, 80, 40, 70])
 
-3. Instanciez la classe `MeritOrderCurve` avec vos données.
-```python
-myObject = MeritOrderCurve(prod, prod_MC, demand, demand_MC)
-```
+demands = np.array([50])
 
-4. Générez et affichez la merit order curve.
-```python
-myObject.merit_order_curve()
+curve = MeritOrderCurve(prod, prod_bids, demands, boolean_cst_demand=True)
+curve.merit_order_curve()
 ```
-
-Vous pouvez également générer la courbe avec une **demande constante** en utilisant le boolean `boolean_cst_demand`. 
-```python
-myObject_constant_demand = MeritOrderCurve(prod, prod_MC, np.array([100]), boolean_cst_demand=True)
-myObject_constant_demand.merit_order_curve()
-```
-A notez qu'ici on ne traite qu'une demande constante **inelastique** (peut importe le prix du MWh, le client est prêt à payer, i.e. la droite de demande est verticale), ainsi, pour une demande elastique (droite de demande horizontale), générer une merit order curve et regardez par vous même le point d'intersection.
 
 # Auteur
 Théophile SCHMUTZ

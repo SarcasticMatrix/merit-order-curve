@@ -97,34 +97,34 @@ class MeritOrderCurve:
         plt.legend()
         plt.show()
         
-##############################################################################################
-## EXAMPLE 1 #################################################################################
-##############################################################################################
+# ##############################################################################################
+# ## EXAMPLE 1 #################################################################################
+# ##############################################################################################
 
-## Production
-prod = np.array([100,100,200,50,100,50])
-prod_bids = np.array([-25,-30,10,80,40,70])
+# ## Production
+# prod = np.array([100,100,200,50,100,50])
+# prod_bids = np.array([-25,-30,10,80,40,70])
 
-# Demand
-demands = np.array([250,50,70])
-demands_bids = np.array([200,60,300])
+# # Demand
+# demands = np.array([250,50,70])
+# demands_bids = np.array([200,60,300])
 
-# Plot
-curve = MeritOrderCurve(prod,prod_bids,demands,demands_bids)
-curve.merit_order_curve()
+# # Plot
+# curve = MeritOrderCurve(prod,prod_bids,demands,demands_bids)
+# curve.merit_order_curve()
 
 
-##############################################################################################
-## EXAMPLE 2 - with a constant demand ########################################################
-##############################################################################################
+# ##############################################################################################
+# ## EXAMPLE 2 - with a constant demand ########################################################
+# ##############################################################################################
 
-## Production
-prod = np.array([100,100,200,50,100,50])
-prod_bids = np.array([-25,-30,10,80,40,70])
+# ## Production
+# prod = np.array([100,100,200,50,100,50])
+# prod_bids = np.array([-25,-30,10,80,40,70])
 
-# Demand
-demands = np.array([50])
+# # Demand
+# demands = np.array([50])
 
-# Plot
-curve = MeritOrderCurve(prod,prod_bids,demands,boolean_cst_demand=True)
-curve.merit_order_curve()
+# # Plot
+# curve = MeritOrderCurve(prod,prod_bids,demands,boolean_cst_demand=True)
+# curve.merit_order_curve()
