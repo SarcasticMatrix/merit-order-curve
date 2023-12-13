@@ -24,7 +24,7 @@ Import the Python file meritOrderCurve,
 from meritOrderCurve import MeritOrderCurve
 import numpy as np
 ```
-Then, create `np.array` representing **productions**, **production bids**, **demands**, and **demand bids**. Note that everything should be in the same unit.
+Then, create `np.array` representing **productions** (often in $MW$), **production bids** (often in $€/MWh$), **demands**, and **demand bids**. Note that everything should be in the same unit.
 
 - Example of use in a typical case, 
 ```python
