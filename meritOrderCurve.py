@@ -115,8 +115,8 @@ class MeritOrderCurve:
 
         plt.plot(optimum_prod,optimum_price,'rx')
         
-        plt.xlabel("Aggregated Production")
-        plt.ylabel("Marginal Cost")
+        plt.xlabel("Production")
+        plt.ylabel("Bids")
 
         plt.xticks(np.arange(0, max(sorted_productions), 100))
         minor_locator = MultipleLocator(10)
@@ -124,7 +124,7 @@ class MeritOrderCurve:
         plt.grid(True, which='major', linestyle='--', linewidth=0.7, color='gray')
         plt.grid(True, which='minor', linestyle='--', linewidth=0.3, color='lightgray')
 
-        plt.title(f"Merit Order Curve, p* = {optimum_price}, q* = {optimum_prod}")
+        plt.title(rf"Merit Order Curve, $p* = {optimum_price}$, $q* = {optimum_prod}$")
         plt.legend()
         plt.show()
         

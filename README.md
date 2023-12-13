@@ -1,57 +1,56 @@
 # Merit Order Curve
 
-Ce projet implémente une classe Python appelée `MeritOrderCurve` qui permet de générer une merit order curve afin d'obtenir le clearing price. 
+This project implements a Python class called `MeritOrderCurve` that generates a merit order curve to determine the clearing price $p^*$.
 
-![Alt text](image.png)
+<img src="image1.png" alt="image" style="width:420px;height:auto;">
+<img src="image2.png" alt="image" style="width:420px;height:auto;">
+
 
 ## Installation
 
-1. Clonez le dépôt sur votre machine locale,
+1. Clone the repository to your local machine,
    ```bash
    git clone https://github.com/SarcasticMatrix/merit-order-curve.git
    cd merit-order-curve
    ```
-   Sinon, vous pouvez juste copier coller le code de `meritOrderCurve.py`,
 
-2. Puis, installez les libraries,
+2. Install the required libraries,
    ```bash
    pip install -r requirements.txt
    ```
 
-# Utilisation
+# Usage
 
-Créez des `np.array` représentant les **productions**, les **bids de production**, les **demandes** et les **bids de demande**. Attention, il faut que tout soit dans la même unité. 
-
-Soit vous importer le fichier python `meritOrderCurve`,
+Import the Python file meritOrderCurve,
 ```python
 from meritOrderCurve import MeritOrderCurve
 import numpy as np
 ```
-Ou alors, vous pouvez directement écire dans le fichier en lui même (comme pour les 2 exemples)
+Then, create `np.array` representing **productions**, **production bids**, **demands**, and **demand bids**. Note that everything should be in the same unit.
 
-- Exemple d'utilisation dans un cas classique,  
+- Example of use in a typical case, 
 ```python
-prod = np.array([100, 100, 200, 50, 100, 50])       # production
-prod_bids = np.array([-25, -30, 10, 80, 40, 70])    # production bids
+prod = np.array([70,50,80,120,160,100])             # production
+prod_bids = np.array([100,60,35,10,5,0])            # production bids
 
-demands = np.array([250, 50, 70])                   # demand
-demands_bids = np.array([200, 60, 300])             # demand bids
+demands = np.array([140,80,100,30])                 # demand
+demands_bids = np.array([np.inf,65,np.inf,40])      # demand bids
 
 curve = MeritOrderCurve(prod, prod_bids, demands, demands_bids)
 curve.merit_order_curve()                           # plot the merit order curve
 ```
 
-- Exemple avec une demande constante, il faut juste préciser `boolean_cst_demand=True`,
+- Example with constant (inelastic) demand, just specify boolean_cst_demand=True,
 ```python
 
-prod = np.array([100, 100, 200, 50, 100, 50])
-prod_bids = np.array([-25, -30, 10, 80, 40, 70])
+prod = np.array([70,50,80,120,160,100])
+prod_bids = np.array([100,60,35,10,5,0])
 
-demands = np.array([50])
+demands = np.array([210])
 
 curve = MeritOrderCurve(prod, prod_bids, demands, boolean_cst_demand=True)
 curve.merit_order_curve()
 ```
 
-# Auteur
+# Author
 Théophile SCHMUTZ
