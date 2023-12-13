@@ -25,7 +25,7 @@ class MeritOrderCurve:
         try:
             if self.demands_marginal_costs == None and self.boolean_cst_demand == False:
                 self.boolean_cst_demand = True
-                print("[Attention] Les coûts marginaux pour la demande n'ont pas été spécifiés, et il n'a pas été indiqué que la demande est constante.")
+                print("[Warning] Les coûts marginaux pour la demande n'ont pas été spécifiés, et il n'a pas été indiqué que la demande est constante.")
         except:
             None
 
@@ -61,7 +61,33 @@ class MeritOrderCurve:
         sorted_costs = np.concatenate((sorted_costs,np.array([self.minimum_bids])))
 
         return sorted_productions, sorted_costs
+    
+    def find_intersection_point(self):
+        sorted_productions, sorted_productions_costs = self.prepare_curves_production()
 
+        if not self.boolean_cst_demand:
+            sorted_demands, sorted_demands_costs = self.prepare_curves_demand()
+
+            min_len = min(len(sorted_productions_costs), len(sorted_demands_costs))
+            sorted_productions_costs = sorted_productions_costs[:min_len]
+            sorted_demands_costs = sorted_demands_costs[:min_len]
+
+            idx_intersection = np.argmin(np.abs(sorted_productions_costs - sorted_demands_costs))
+
+            intersection_point = (sorted_demands[idx_intersection], sorted_productions_costs[idx_intersection])
+
+            return intersection_point
+        else:
+            constant_demand_value = self.demands[0]
+
+            # Trouver l'index où la production atteint ou dépasse la demande constante
+            idx_intersection = np.argmax(sorted_productions >= constant_demand_value)
+
+            # Coordonnées du point d'intersection
+            intersection_point = (constant_demand_value, sorted_productions_costs[idx_intersection])
+
+            return intersection_point
+        
     def merit_order_curve(self):
 
         sorted_productions, sorted_productions_costs = self.prepare_curves_production()
@@ -78,12 +104,17 @@ class MeritOrderCurve:
             sorted_demands, sorted_demands_costs = self.prepare_curves_demand()
 
             plt.step(
-                sorted_demands, sorted_demands_costs, label="Demand Curve", where="pre"
+                sorted_demands, sorted_demands_costs, label="Demand Curve", where="pre", color="r"
             )
         else:
             plt.axvline(
-                x=self.demands[0], color="r", linestyle="--", label="Demand Curve"
+                x=self.demands[0], color="r", label="Demand Curve"
             )
+        
+        optimum_prod,optimum_price = self.find_intersection_point()
+
+        plt.plot(optimum_prod,optimum_price,'rx')
+        
         plt.xlabel("Aggregated Production")
         plt.ylabel("Marginal Cost")
 
@@ -93,7 +124,7 @@ class MeritOrderCurve:
         plt.grid(True, which='major', linestyle='--', linewidth=0.7, color='gray')
         plt.grid(True, which='minor', linestyle='--', linewidth=0.3, color='lightgray')
 
-        plt.title("Merit Order Curve")
+        plt.title(f"Merit Order Curve, p* = {optimum_price}, q* = {optimum_prod}")
         plt.legend()
         plt.show()
         
@@ -101,30 +132,29 @@ class MeritOrderCurve:
 # ## EXAMPLE 1 #################################################################################
 # ##############################################################################################
 
-# ## Production
-# prod = np.array([100,100,200,50,100,50])
-# prod_bids = np.array([-25,-30,10,80,40,70])
+## Production
+prod = np.array([70,50,80,120,160,100])
+prod_bids = np.array([100,60,35,10,5,0])
 
-# # Demand
-# demands = np.array([250,50,70])
-# demands_bids = np.array([200,60,300])
+# Demand
+demands = np.array([140,80,100,30])
+demands_bids = np.array([np.inf,65,np.inf,40])
 
-# # Plot
-# curve = MeritOrderCurve(prod,prod_bids,demands,demands_bids)
-# curve.merit_order_curve()
-
+# Plot
+curve = MeritOrderCurve(prod,prod_bids,demands,demands_bids)
+curve.merit_order_curve()
 
 # ##############################################################################################
 # ## EXAMPLE 2 - with a constant demand ########################################################
 # ##############################################################################################
 
-# ## Production
-# prod = np.array([100,100,200,50,100,50])
-# prod_bids = np.array([-25,-30,10,80,40,70])
+## Production
+prod = np.array([70,50,80,120,160,100])
+prod_bids = np.array([100,60,35,10,5,0])
 
-# # Demand
-# demands = np.array([50])
+# Demand
+demands = np.array([210])
 
-# # Plot
-# curve = MeritOrderCurve(prod,prod_bids,demands,boolean_cst_demand=True)
-# curve.merit_order_curve()
+# Plot
+curve = MeritOrderCurve(prod,prod_bids,demands,boolean_cst_demand=True)
+curve.merit_order_curve()
