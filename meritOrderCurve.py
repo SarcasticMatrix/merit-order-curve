@@ -127,3 +127,5 @@ class MeritOrderCurve:
         plt.title(rf"Merit Order Curve, $p* = {optimum_price}$, $q* = {optimum_prod}$")
         plt.legend()
         plt.show()
+
+##
