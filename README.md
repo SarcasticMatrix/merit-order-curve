@@ -49,6 +49,3 @@ demands = np.array([210])
 curve = MeritOrderCurve(prod, prod_bids, demands, boolean_cst_demand=True)
 curve.merit_order_curve()
 ```
-
-# Author
-Théophile SCHMUTZ
