@@ -2,7 +2,7 @@
 
 This humble project implements a Python class called `MeritOrderCurve` that generates a merit order curve to determine the clearing price $p^*$.
 
-<img src="image.png" alt="image" >
+<img src="image.png" alt="image">
 
 ## Installation
 
