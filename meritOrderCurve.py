@@ -127,34 +127,3 @@ class MeritOrderCurve:
         plt.title(rf"Merit Order Curve, $p* = {optimum_price}$, $q* = {optimum_prod}$")
         plt.legend()
         plt.show()
-        
-# ##############################################################################################
-# ## EXAMPLE 1 #################################################################################
-# ##############################################################################################
-
-## Production
-prod = np.array([70,50,80,120,160,100])
-prod_bids = np.array([100,60,35,10,5,0])
-
-# Demand
-demands = np.array([140,80,100,30])
-demands_bids = np.array([np.inf,65,np.inf,40])
-
-# Plot
-curve = MeritOrderCurve(prod,prod_bids,demands,demands_bids)
-curve.merit_order_curve()
-
-# ##############################################################################################
-# ## EXAMPLE 2 - with a constant demand ########################################################
-# ##############################################################################################
-
-## Production
-prod = np.array([70,50,80,120,160,100])
-prod_bids = np.array([100,60,35,10,5,0])
-
-# Demand
-demands = np.array([210])
-
-# Plot
-curve = MeritOrderCurve(prod,prod_bids,demands,boolean_cst_demand=True)
-curve.merit_order_curve()
